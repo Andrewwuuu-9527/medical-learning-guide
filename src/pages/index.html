@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="医学学习指南">
+    <meta name="keywords" content="医学教育,医学学习,USMLE,执业医师,医学资源">
+    
+    <title>医学学习指南 - 您的医学学习导航</title>
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="../assets/css/main.css" as="style">
+    <link rel="preload" href="../assets/js/main.js" as="script">
+    
+    <!-- CSS 文件 -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    
+    <!-- 网站图标 -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+</head>
+<body>
+    <!-- 页面加载指示器 -->
+    <div id="loading-indicator" class="loading-indicator">
+        <div class="spinner"></div>
+        <p>加载中...</p>
+    </div>
+
+    <!-- 跳过导航链接 (无障碍功能) -->
+    <a href="#main-content" class="skip-link">跳过导航</a>
+
+    <!-- 头部导航 -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <!-- 网站Logo -->
+                <div class="logo">
+                    <a href="#home" class="logo-link">
+                        <span class="logo-icon">🩺</span>
+                        <span class="logo-text">医学学习指南</span>
+                    </a>
+                </div>
+
+                <!-- 主导航 -->
+                <nav class="main-nav" role="navigation" aria-label="主导航">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#home" class="nav-link active" data-page="home">首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#learning-paths" class="nav-link" data-page="learning-paths">学习路径</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#resources" class="nav-link" data-page="resources">资源中心</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#career-guide" class="nav-link" data-page="career-guide">职业规划</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#about" class="nav-link" data-page="about">关于项目</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- 用户工具 -->
+                <div class="user-tools">
+                    <button class="theme-toggle" aria-label="切换主题模式">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <button class="language-switcher" aria-label="切换语言">
+                        <span>中文</span>
+                    </button>
+                </div>
+
+                <!-- 移动端菜单按钮 -->
+                <button class="mobile-menu-toggle" aria-label="切换菜单" aria-expanded="false">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main id="main-content" class="main-content" role="main">
+        <!-- 各页面内容将通过JavaScript动态加载到这里 -->
+        <div id="page-container" class="page-container">
+            <!-- 默认显示首页内容 -->
+            <section id="home-page" class="page active" data-page="home">
+                <div class="hero-section">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1 class="hero-title">医学学习指南</h1>
+                            <p class="hero-subtitle">
+                                为医学人提供的全面学习导航
+                            </p>
+                            <div class="hero-actions">
+                                <button class="btn btn-primary" data-action="start-learning">
+                                    开始学习之旅
+                                </button>
+                                <button class="btn btn-secondary" data-action="explore-paths">
+                                    探索学习路径
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 特色模块快速导航 -->
+                <section class="features-section">
+                    <div class="container">
+                        <h2 class="section-title">核心功能模块</h2>
+                        <div class="features-grid">
+                            <div class="feature-card" data-feature="learning-paths">
+                                <div class="feature-icon">📚</div>
+                                <h3 class="feature-title">个性化学习路径</h3>
+                                <p class="feature-description">
+                                    根据您的背景和目标定制专属学习路线
+                                </p>
+                            </div>
+                            <div class="feature-card" data-feature="resources">
+                                <div class="feature-icon">🔍</div>
+                                <h3 class="feature-title">开源资源库</h3>
+                                <p class="feature-description">
+                                    学习资源
+                                </p>
+                            </div>
+                            <div class="feature-card" data-feature="career-guide">
+                                <div class="feature-icon">🎯</div>
+                                <h3 class="feature-title">职业发展规划</h3>
+                                <p class="feature-description">
+                                    医学职业路径详解与规划
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- 其他页面将动态加载 -->
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>医学学习指南</h3>
+                    <p>构建医学学习的桥梁，连接知识与实践</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#contribute">贡献指南</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>联系信息</h4>
+                    <p>邮箱: contact@medical-guide.org</p>
+                    <p>GitHub: github.com/medical-learning-guide</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 医学学习指南项目. 基于MIT开源协议.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 文件 -->
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/router.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

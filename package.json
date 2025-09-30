@@ -1,0 +1,30 @@
+{
+  "name": "medical-learning-guide",
+  "version": "1.0.0",
+  "description": "A comprehensive medical learning guide and bridge for medical students and professionals",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "build": "node scripts/build.js",
+    "deploy": "node scripts/deploy.js",
+    "lint": "eslint src/**/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "medical",
+    "education",
+    "learning",
+    "guide",
+    "usmle",
+    "medical-education"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/medical-learning-guide"
+  }
+}
