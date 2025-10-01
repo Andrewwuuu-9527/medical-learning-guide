@@ -2,9 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main, master ]
 
 jobs:
   build-and-deploy:
@@ -16,22 +16,35 @@ jobs:
     
     steps:
     - name: Checkout
-      uses: actions/checkout@v4 # 使用稳定的v4版本
-
+      uses: actions/checkout@v4
+    
     - name: Setup Pages
-      uses: actions/configure-pages@v3 # 当前最新稳定版本
-
+      uses: actions/configure-pages@v3
+    
     - name: Create deployment package
       run: |
+        # 创建部署目录
         mkdir -p ./_site
-        cp -r ./src/* ./_site/
-        echo "Deployment package created"
+        
+        # 复制所有文件到部署目录，重新组织结构
+        cp -r ./src/assets ./_site/assets/
+        cp ./src/pages/index.html ./_site/index.html
+        
+        # 修复HTML文件中的资源路径
+        sed -i 's|\.\./assets/|./assets/|g' ./_site/index.html
+        
+        # 创建 .nojekyll 文件（重要！）
+        touch ./_site/.nojekyll
+        
+        echo "✅ 部署包创建完成"
+        echo "📁 最终结构:"
+        find ./_site -type f | sort
 
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3 # 升级至v3版本
+      uses: actions/upload-pages-artifact@v3
       with:
         path: ./_site
-
+    
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v4 # 升级至v4版本
+      uses: actions/deploy-pages@v4
