@@ -1,6 +1,8 @@
 /**
  * 医学学习指南 - 主应用逻辑
  * 初始化应用和协调各模块
+ * 作者: Medical Learning Guide Team
+ * 版本: 1.0.0
  */
 
 (function(global) {
@@ -12,6 +14,8 @@
         constructor() {
             this.initialized = false;
             this.currentUser = null;
+            this.dataManager = null; // 新增：数据管理器引用
+            this.currentPage = null; // 新增：当前页面状态
         }
 
         /**
@@ -44,11 +48,17 @@
                     throw new Error('MLGConfig 未加载，请检查 config.js 文件');
                 }
 
+                // 新增：初始化数据管理器
+                this._initDataManager();
+
                 // 初始化模块
                 await this._initModules();
 
                 // 绑定全局事件
                 this._bindGlobalEvents();
+
+                // 新增：预加载核心数据
+                await this._preloadData();
 
                 // 隐藏加载指示器
                 this._hideLoadingIndicator();
@@ -60,6 +70,42 @@
             } catch (error) {
                 console.error('❌ 应用初始化失败:', error);
                 this._showFatalError(error);
+            }
+        }
+
+        /**
+         * 新增：初始化数据管理器
+         */
+        _initDataManager() {
+            if (typeof window.dataManager === 'undefined') {
+                throw new Error('dataManager 未加载，请检查 data-manager.js 文件');
+            }
+            this.dataManager = window.dataManager;
+            console.log('✅ 数据管理器初始化完成');
+        }
+
+        /**
+         * 新增：预加载核心数据
+         */
+        async _preloadData() {
+            console.log('📥 开始预加载核心数据...');
+            
+            try {
+                await this.dataManager.preloadCoreData();
+                
+                // 发布数据加载完成事件
+                if (window.MLGUtils && window.MLGUtils.events) {
+                    window.MLGUtils.events.emit('dataReady', {
+                        resources: this.dataManager.resources.size,
+                        learningPaths: this.dataManager.learningPaths.size
+                    });
+                }
+                
+                console.log('✅ 核心数据预加载完成');
+                
+            } catch (error) {
+                console.error('❌ 数据预加载失败:', error);
+                // 非致命错误，继续应用初始化
             }
         }
 
@@ -124,12 +170,66 @@
                 window.MLGUtils.events.on('routeChange', (data) => {
                     this._onRouteChange(data);
                 });
+
+                // 新增：数据就绪事件
+                window.MLGUtils.events.on('dataReady', (data) => {
+                    this._onDataReady(data);
+                });
             }
 
             // 窗口调整大小事件
             window.addEventListener('resize', this._debounce(() => {
                 this._onWindowResize();
             }, 250));
+        }
+
+        /**
+         * 新增：数据就绪回调
+         */
+        _onDataReady(data) {
+            console.log(`📊 核心数据加载完成: ${data.resources}个资源, ${data.learningPaths}个学习路径`);
+            
+            // 更新首页统计信息
+            this._updateHomepageStats();
+            
+            // 如果当前在资源页面，刷新显示
+            if (this.currentPage === 'resources') {
+                this._refreshResourcesDisplay();
+            }
+        }
+
+        /**
+         * 新增：更新首页统计信息
+         */
+        _updateHomepageStats() {
+            const statsElement = document.getElementById('homepage-stats');
+            if (statsElement && this.dataManager) {
+                const resourceCount = this.dataManager.resources.size;
+                const pathCount = this.dataManager.learningPaths.size;
+                
+                statsElement.innerHTML = `
+                    <div class="stat-item">
+                        <div class="stat-number">${resourceCount}+</div>
+                        <div class="stat-label">精选学习资源</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">${pathCount}</div>
+                        <div class="stat-label">个性化学习路径</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">支持语言</div>
+                    </div>
+                `;
+            }
+        }
+
+        /**
+         * 新增：刷新资源显示
+         */
+        _refreshResourcesDisplay() {
+            // 这里会在后续步骤中实现具体的资源渲染逻辑
+            console.log('🔄 刷新资源显示 - 功能待实现');
         }
 
         /**
@@ -195,6 +295,9 @@
          * 路由变更回调
          */
         _onRouteChange(data) {
+            // 更新当前页面状态
+            this.currentPage = data.to;
+
             // 滚动到顶部
             window.scrollTo({ top: 0, behavior: 'smooth' });
 

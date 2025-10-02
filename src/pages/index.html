@@ -8,17 +8,17 @@
     
     <title>医学学习指南与桥梁 - 您的医学学习导航</title>
     
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="../assets/css/main.css" as="style">
-    <link rel="preload" href="../assets/js/main.js" as="script">
+    <!-- 预加载关键资源 - 修复路径 -->
+    <link rel="preload" href="/assets/css/main.css" as="style">
+    <link rel="preload" href="/assets/js/main.js" as="script">
     
-    <!-- CSS 文件 -->
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/layout.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
+    <!-- CSS 文件 - 修复路径 -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
     
     <!-- 网站图标 -->
-    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
 </head>
 <body>
     <!-- 页面加载指示器 -->
@@ -171,10 +171,77 @@
         </div>
     </footer>
 
-    <!-- JavaScript 文件 - 确保正确的加载顺序 -->
-    <script src="../assets/js/utils.js"></script>
-    <script src="../assets/js/config.js"></script>
-    <script src="../assets/js/router.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <!-- JavaScript 文件 - 修复路径并确保正确的加载顺序 -->
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/config.js"></script>
+    <script src="/assets/js/data-manager.js"></script>
+    <script src="/assets/js/router.js"></script>
+    <script src="/assets/js/main.js"></script>
+
+    <!-- 添加加载状态检查 -->
+    <script>
+        // 页面加载状态检查
+        console.log('🎯 HTML页面加载完成，开始检查资源...');
+        
+        // 检查关键资源是否加载
+        const checkResource = (url, type) => {
+            return new Promise((resolve) => {
+                const element = type === 'css' ? 
+                    document.querySelector(`link[href="${url}"]`) :
+                    document.querySelector(`script[src="${url}"]`);
+                
+                if (element) {
+                    element.onload = () => {
+                        console.log(`✅ ${type.toUpperCase()}加载成功: ${url}`);
+                        resolve(true);
+                    };
+                    element.onerror = () => {
+                        console.error(`❌ ${type.toUpperCase()}加载失败: ${url}`);
+                        resolve(false);
+                    };
+                } else {
+                    console.error(`❌ 未找到资源元素: ${url}`);
+                    resolve(false);
+                }
+            });
+        };
+
+        // 检查所有关键资源
+        window.addEventListener('load', async function() {
+            console.log('🎉 窗口加载事件触发');
+            
+            // 隐藏加载指示器
+            const loadingIndicator = document.getElementById('loading-indicator');
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'none';
+            }
+            
+            // 检查CSS文件
+            const cssFiles = [
+                '/assets/css/main.css',
+                '/assets/css/layout.css', 
+                '/assets/css/components.css'
+            ];
+            
+            for (const cssFile of cssFiles) {
+                await checkResource(cssFile, 'css');
+            }
+            
+            // 检查JS文件
+            const jsFiles = [
+                '/assets/js/utils.js',
+                '/assets/js/config.js',
+                '/assets/js/data-manager.js',
+                '/assets/js/router.js', 
+                '/assets/js/main.js'
+            ];
+            
+            for (const jsFile of jsFiles) {
+                await checkResource(jsFile, 'js');
+            }
+            
+            console.log('🚀 所有资源检查完成！');
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,25 @@
+{
+  "category": "basic_sciences",
+  "name": "基础医学",
+  "description": "医学基础学科学习资源",
+  "resources": [
+    {
+      "id": "anatomy-001",
+      "title": "可视人体项目 - 解剖学图谱",
+      "description": "交互式3D人体解剖学图谱，包含详细的结构标注和分层显示",
+      "url": "https://www.visiblebody.com/",
+      "category": "basic_sciences",
+      "subcategory": "anatomy",
+      "difficulty": "beginner",
+      "language": "en-US",
+      "tags": ["3D模型", "交互式", "免费资源", "解剖学"],
+      "rating": 4.8,
+      "timeRequired": "15-20小时",
+      "lastUpdated": "2024-01-15",
+      "author": "Visible Body",
+      "license": "Freemium",
+      "featured": true,
+      "prerequisites": []
+    }
+  ]
+}

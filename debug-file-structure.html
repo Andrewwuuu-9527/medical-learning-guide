@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件结构调试</title>
+</head>
+<body>
+    <h1>文件结构调试</h1>
+    <button onclick="testFilePaths()">测试文件路径</button>
+    <div id="results"></div>
+
+    <script>
+        async function testFilePaths() {
+            const files = [
+                '/src/data/categories/basic_sciences.json',
+                '/src/data/categories/usmle_prep.json', 
+                '/src/data/learning_paths.json',
+                '/test-data-layer.html'
+            ];
+            
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        results.innerHTML += `<p style="color: green">✅ ${file} - 存在</p>`;
+                    } else {
+                        results.innerHTML += `<p style="color: red">❌ ${file} - 不存在 (${response.status})</p>`;
+                    }
+                } catch (error) {
+                    results.innerHTML += `<p style="color: red">❌ ${file} - 错误: ${error.message}</p>`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

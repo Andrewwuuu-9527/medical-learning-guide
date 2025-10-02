@@ -1,0 +1,25 @@
+{
+  "paths": [
+    {
+      "id": "path-medical-newbie",
+      "name": "医学入门路径",
+      "description": "为医学零基础学习者设计的系统入门路径",
+      "targetAudience": ["newbie"],
+      "duration": "3-6个月",
+      "stages": [
+        {
+          "stage": 1,
+          "name": "医学基础概念",
+          "description": "学习医学基本术语和概念",
+          "duration": "2-4周",
+          "resources": ["anatomy-001"],
+          "learningObjectives": [
+            "掌握基本医学术语",
+            "理解人体主要系统",
+            "熟悉常见疾病概念"
+          ]
+        }
+      ]
+    }
+  ]
+}

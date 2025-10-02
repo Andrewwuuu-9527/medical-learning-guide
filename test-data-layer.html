@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据层测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-container { max-width: 800px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .success { color: green; }
+        .error { color: red; }
+        .resource-card { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>数据层功能测试</h1>
+        
+        <div class="test-section">
+            <button onclick="testDataLoading()">测试数据加载</button>
+            <button onclick="testResourceRetrieval()">测试资源检索</button>
+            <button onclick="clearResults()">清除结果</button>
+        </div>
+
+        <div id="test-results"></div>
+        <div id="resource-display"></div>
+    </div>
+
+    <script src="./src/assets/js/utils.js"></script>
+    <script src="./src/assets/js/config.js"></script>
+    <script src="./src/assets/js/data-manager.js"></script>
+    
+    <script>
+        async function testDataLoading() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<h3>测试数据加载...</h3>';
+            
+            try {
+                const data = await dataManager.loadData('category_basic_sciences');
+                results.innerHTML += `<p class="success">✅ 基础科学数据加载成功: ${data.resources.length}个资源</p>`;
+                
+                const paths = await dataManager.loadData('learning_paths');
+                results.innerHTML += `<p class="success">✅ 学习路径数据加载成功: ${paths.paths.length}个路径</p>`;
+                
+            } catch (error) {
+                results.innerHTML += `<p class="error">❌ 数据加载失败: ${error.message}</p>`;
+            }
+        }
+
+        async function testResourceRetrieval() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<h3>测试资源检索...</h3>';
+            
+            try {
+                await dataManager.loadData('category_basic_sciences');
+                
+                const anatomyResources = dataManager.getResourcesByCategory('basic_sciences', {
+                    subcategory: 'anatomy'
+                });
+                
+                results.innerHTML += `<p class="success">✅ 解剖学资源检索成功: ${anatomyResources.length}个资源</p>`;
+                
+                const display = document.getElementById('resource-display');
+                display.innerHTML = '<h4>检索到的资源:</h4>';
+                
+                anatomyResources.forEach(resource => {
+                    display.innerHTML += `
+                        <div class="resource-card">
+                            <h5>${resource.title}</h5>
+                            <p>${resource.description}</p>
+                            <p><strong>难度:</strong> ${resource.difficulty} | <strong>评分:</strong> ${resource.rating}</p>
+                        </div>
+                    `;
+                });
+                
+            } catch (error) {
+                results.innerHTML += `<p class="error">❌ 资源检索失败: ${error.message}</p>`;
+            }
+        }
+
+        function clearResults() {
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('resource-display').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件检查</title>
+</head>
+<body>
+    <h1>文件存在性检查</h1>
+    <button onclick="checkFiles()">检查文件</button>
+    <div id="results"></div>
+
+    <script>
+        async function checkFiles() {
+            const files = [
+                '/src/data/categories/basic_sciences.json',
+                '/src/data/categories/usmle_prep.json',
+                '/src/data/learning_paths.json'
+            ];
+            
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        results.innerHTML += `<p style="color: green">✅ ${file} - 存在</p>`;
+                    } else {
+                        results.innerHTML += `<p style="color: red">❌ ${file} - 不存在 (${response.status})</p>`;
+                    }
+                } catch (error) {
+                    results.innerHTML += `<p style="color: red">❌ ${file} - 错误: ${error.message}</p>`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "category": "usmle_prep",
+  "name": "USMLE考试准备",
+  "description": "美国医师执照考试备考资源",
+  "resources": [
+    {
+      "id": "usmle-step1-001",
+      "title": "First Aid USMLE Step 1 2024",
+      "description": "USMLE第一步考试权威备考指南，包含高频考点和临床案例",
+      "url": "https://www.usmle.org/preparation-materials",
+      "category": "usmle_prep",
+      "subcategory": "step1",
+      "difficulty": "advanced",
+      "language": "en-US",
+      "tags": ["权威指南", "高频考点", "临床案例", "考试技巧"],
+      "rating": 4.9,
+      "timeRequired": "200-300小时",
+      "lastUpdated": "2024-01-12",
+      "author": "USMLE官方",
+      "license": "版权所有",
+      "featured": true,
+      "prerequisites": ["anatomy-001"]
+    }
+  ]
+}
